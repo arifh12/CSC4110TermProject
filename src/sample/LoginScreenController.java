@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class LoginScreenController implements Initializable {
 
 
-    DB_Connection con;
+    DBConnection con;
     Connection connection;
 
     @FXML
@@ -35,7 +35,7 @@ public class LoginScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        con = new DB_Connection();
+        con = new DBConnection();
         connection = con.getConnection();
 
         btnLogin.setOnAction(event -> {

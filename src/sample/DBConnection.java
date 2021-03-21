@@ -10,10 +10,10 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 
-public class DB_Connection {
+public class DBConnection {
 
     public Connection getConnection() {
-        DB_Connection obj_DB_Connection = new DB_Connection();
+        DBConnection obj_DB_Connection = new DBConnection();
         Connection connection = null;
         connection = obj_DB_Connection.create_connection();
         System.out.println("Connection Established Successfully");

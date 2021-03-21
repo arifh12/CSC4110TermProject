@@ -67,8 +67,8 @@ public class DashboardController implements Initializable {
             try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            Pane root = loader.load(getClass().getResource("Vendor_Customer.fxml").openStream());
-            Vendor_CustomerController Msg = (Vendor_CustomerController) loader.getController();
+            Pane root = loader.load(getClass().getResource("VendorCustomer.fxml").openStream());
+            VendorCustomerController Msg = (VendorCustomerController) loader.getController();
             Scene scene = new Scene(root);
            // scene.getStylesheets().setAll(
              //   getClass().getResource("style.css").toExternalForm()

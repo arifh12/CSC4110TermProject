@@ -2,11 +2,11 @@ package sample;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class Vendor_Customer {
+public class VendorCustomer {
     SimpleStringProperty id, name, staddress, city, state, phone, balance, lastpaidamount, lastorderdate, sessionaldiscount;
 
-    public Vendor_Customer(String id, String name, String staddress, String city, String state,
-                           String phone, String balance, String lastpaidamount, String lastorderdate, String sessionaldiscount) {
+    public VendorCustomer(String id, String name, String staddress, String city, String state,
+                          String phone, String balance, String lastpaidamount, String lastorderdate, String sessionaldiscount) {
 
         this.id = new SimpleStringProperty(id);
         this.name = new SimpleStringProperty(name);

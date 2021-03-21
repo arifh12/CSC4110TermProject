@@ -14,16 +14,15 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class Vendor_CustomerController implements Initializable {
+public class VendorCustomerController implements Initializable {
 
 
-    DB_Connection con;
+    DBConnection con;
     Connection connection;
 
     @FXML
@@ -63,22 +62,22 @@ public class Vendor_CustomerController implements Initializable {
     private Button btnBack;
 
     @FXML
-    private TableView<Vendor_Customer> tbl;
+    private TableView<VendorCustomer> tbl;
 
     @FXML
-    private TableColumn<Vendor_Customer, String> cfname;
+    private TableColumn<VendorCustomer, String> cfname;
 
     @FXML
-    private TableColumn<Vendor_Customer, String> cphn;
+    private TableColumn<VendorCustomer, String> cphn;
 
     @FXML
-    private TableColumn<Vendor_Customer, String> cbalance;
+    private TableColumn<VendorCustomer, String> cbalance;
 
     @FXML
-    private TableColumn<Vendor_Customer, String> clastpaid;
+    private TableColumn<VendorCustomer, String> clastpaid;
 
     @FXML
-    private TableColumn<Vendor_Customer, String> clastorder;
+    private TableColumn<VendorCustomer, String> clastorder;
 
     @FXML
     private TextField txrSearch;
@@ -102,7 +101,7 @@ public class Vendor_CustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        con = new DB_Connection();
+        con = new DBConnection();
         connection = con.getConnection();
 
         setDefault();
@@ -229,7 +228,7 @@ public class Vendor_CustomerController implements Initializable {
     }
     public void setDefault() {
 
-        ObservableList<Vendor_Customer> n = FXCollections.observableArrayList();
+        ObservableList<VendorCustomer> n = FXCollections.observableArrayList();
         try {
             String query;
 
@@ -241,7 +240,7 @@ public class Vendor_CustomerController implements Initializable {
             ResultSet rs = s.executeQuery(query);
 
             while (rs.next()) { // setting the values from table view same way as approval brand category
-                n.add(new Vendor_Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)));
+                n.add(new VendorCustomer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)));
                 //wholeData.add(rs.getString(1)+","+ rs.getString(2)+","+ rs.getString(3)+","+ rs.getString(4)+","+ rs.getString(5)+","+ rs.getString(6)+","+ rs.getString(7)+","+ rs.getString(8)+","+ rs.getString(9)+","+ rs.getString(10));
             }
         } catch (Exception e) {

@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 public class ItemProfileController implements Initializable {
 
 
-    DB_Connection con;
+    DBConnection con;
     Connection connection;
 
     @FXML
@@ -103,7 +103,7 @@ public class ItemProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        con = new DB_Connection();
+        con = new DBConnection();
         connection = con.getConnection();
 
         getVendorId();

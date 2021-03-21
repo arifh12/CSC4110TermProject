@@ -42,7 +42,7 @@ public class UserProfileController implements Initializable {
     @FXML
     private Button btnBack;
 
-    DB_Connection con;
+    DBConnection con;
     Connection connection;
 
     /**
@@ -51,7 +51,7 @@ public class UserProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        con = new DB_Connection();
+        con = new DBConnection();
         connection = con.getConnection();
 
         cRole.getItems().addAll("Inventory Manager", "Purchaser", "Accountant","Sales Person","System administrator");
