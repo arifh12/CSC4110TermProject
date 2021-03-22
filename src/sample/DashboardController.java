@@ -27,6 +27,8 @@ public class DashboardController implements Initializable {
     @FXML
     private Button btnItem;
     @FXML
+    private Button btnCustomerProfile;
+    @FXML
     private Button btnApproval;
     @FXML
     private Button btnBack;
@@ -103,6 +105,24 @@ public class DashboardController implements Initializable {
             }
         
             
+        });
+        btnCustomerProfile.setOnAction(e ->{
+            try {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader();
+                Pane root = loader.load(getClass().getResource("CustomerProfile.fxml").openStream());
+                CustomerProfileController Msg = (CustomerProfileController) loader.getController();
+                Scene scene = new Scene(root);
+                // scene.getStylesheets().setAll(
+                //   getClass().getResource("style.css").toExternalForm()
+                //);
+                stage.setScene(scene);
+                stage.show();
+                ((Node) e.getSource()).getScene().getWindow().hide();
+
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
         });
         /*
         btnApproval.setOnAction(e ->{
