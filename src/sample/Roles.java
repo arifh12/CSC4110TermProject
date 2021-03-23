@@ -1,0 +1,5 @@
+package sample;
+
+public enum Roles {
+    OWNER, ADMINISTRATOR, INVENTORY_MANAGER, PURCHASER, ACCOUNTANT, SALES_PERSON
+}

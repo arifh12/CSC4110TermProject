@@ -108,7 +108,7 @@ public class CustomerProfileController implements Initializable {
         btnSearch.setOnAction(event -> {
             try {
                 Statement s = connection.createStatement();
-                ResultSet rs = s.executeQuery("Select * from distributer.customer where fname = '" + txrSearch.getText() + "' OR id = '" + txrSearch.getText() + "'");
+                ResultSet rs = s.executeQuery("Select * from distributor.customer where fname = '" + txrSearch.getText() + "' OR id = '" + txrSearch.getText() + "'");
                 if(rs.next()) {
                     txtid.setText(rs.getInt("id")+"");
                     txtFullName.setText(rs.getString(2));
@@ -152,7 +152,7 @@ public class CustomerProfileController implements Initializable {
             // String sessional = txtSessional.getValue().toString();
 
             try {
-                String query = "Select fname from distributer.customer";
+                String query = "Select fname from distributor.customer";
                 Statement s = connection.createStatement();
                 ResultSet rs = s.executeQuery(query);
 
@@ -169,7 +169,7 @@ public class CustomerProfileController implements Initializable {
             if(duplicate == 0) {
                 try {   // if the name is alphabet and status is not null then category is added to database
                     Statement s = connection.createStatement();
-                    String q = "INSERT INTO distributer.customer(fname, staddress, city, state, phone, balance, lastpaidamount, lastorderdate) VALUES ('" + name + "','" + address + "','" + city + "','" + state + "','" + phone + "','" + balance + "','" + lastPaid + "','" + lastdate + "'  )";
+                    String q = "INSERT INTO distributor.customer(fname, staddress, city, state, phone, balance, lastpaidamount, lastorderdate) VALUES ('" + name + "','" + address + "','" + city + "','" + state + "','" + phone + "','" + balance + "','" + lastPaid + "','" + lastdate + "'  )";
                     s.execute(q);
                     // setting default for table view.. because we added a new item so it need to be shown
                     // setDefault();
@@ -226,9 +226,9 @@ public class CustomerProfileController implements Initializable {
         try {
             String query;
 
-            query = "Select * from distributer.customer";
+            query = "Select * from distributor.customer";
 
-            //query = "Select * from distributer.vendor where fname Like '%" + txrSearch.getText() + "%'";
+            //query = "Select * from distributor.vendor where fname Like '%" + txrSearch.getText() + "%'";
 
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query);

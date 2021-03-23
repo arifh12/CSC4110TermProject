@@ -68,7 +68,7 @@ public class UserProfileController implements Initializable {
                 check = 1;
             }
             try {
-                String query = "Select userid from distributer.user";
+                String query = "Select userid from distributor.user";
                 Statement s = connection.createStatement();
                 ResultSet rs = s.executeQuery(query);
 
@@ -84,7 +84,7 @@ public class UserProfileController implements Initializable {
             if(check == 1 && duplicate == 0) {
                 try {   // if the name is alphabet and status is not null then category is added to database
                     Statement s = connection.createStatement();
-                    String q = "INSERT INTO distributer.user(fname, lname, userid, password, role) VALUES('" + fname + "','" + lname + "','" + userid + "','" + pass + "','" + cRole.getValue() + "')";
+                    String q = "INSERT INTO distributor.user(fname, lname, userid, password, role) VALUES('" + fname + "','" + lname + "','" + userid + "','" + pass + "','" + cRole.getValue() + "')";
                     s.execute(q);
                     // setting default for table view.. because we added a new item so it need to be shown
                     //setDefault();

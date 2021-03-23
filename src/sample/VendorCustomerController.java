@@ -114,7 +114,7 @@ public class VendorCustomerController implements Initializable {
         btnSearch.setOnAction(event -> {
             try {
                 Statement s = connection.createStatement();
-                ResultSet rs = s.executeQuery("Select * from distributer.vendor where fname = '" + txrSearch.getText() + "' OR id = '" + txrSearch.getText() + "'");
+                ResultSet rs = s.executeQuery("Select * from distributor.vendor where fname = '" + txrSearch.getText() + "' OR id = '" + txrSearch.getText() + "'");
                 if(rs.next()) {
                     txtid.setText(rs.getInt("id")+"");
                     txtFullName.setText(rs.getString(2));
@@ -158,7 +158,7 @@ public class VendorCustomerController implements Initializable {
             String sessional = txtSessional.getValue().toString();
 
             try {
-                String query = "Select fname from distributer.vendor";
+                String query = "Select fname from distributor.vendor";
                 Statement s = connection.createStatement();
                 ResultSet rs = s.executeQuery(query);
 
@@ -175,7 +175,7 @@ public class VendorCustomerController implements Initializable {
             if(duplicate == 0) {
                 try {   // if the name is alphabet and status is not null then category is added to database
                     Statement s = connection.createStatement();
-                    String q = "INSERT INTO distributer.vendor(fname, staddress, city, state, phone, balance, lastpaidamount, lastorderdate, sessionaldiscountstartdate) VALUES ('" + name + "','" + address + "','" + city + "','" + state + "','" + phone + "','" + balance + "','" + lastPaid + "','" + lastdate + "','" + sessional + "'  )";
+                    String q = "INSERT INTO distributor.vendor(fname, staddress, city, state, phone, balance, lastpaidamount, lastorderdate, sessionaldiscountstartdate) VALUES ('" + name + "','" + address + "','" + city + "','" + state + "','" + phone + "','" + balance + "','" + lastPaid + "','" + lastdate + "','" + sessional + "'  )";
                     s.execute(q);
                     // setting default for table view.. because we added a new item so it need to be shown
                     // setDefault();
@@ -232,9 +232,9 @@ public class VendorCustomerController implements Initializable {
         try {
             String query;
 
-                query = "Select * from distributer.vendor";
+                query = "Select * from distributor.vendor";
 
-                //query = "Select * from distributer.vendor where fname Like '%" + txrSearch.getText() + "%'";
+                //query = "Select * from distributor.vendor where fname Like '%" + txrSearch.getText() + "%'";
 
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query);
