@@ -135,8 +135,8 @@ public class ItemProfileController implements Initializable {
         });
 
         btnClear.setOnAction(e -> {
-            btnCreate.setDisable(true);
-            btnUpdate.setDisable(false);
+            btnCreate.setDisable(false);
+            btnUpdate.setDisable(true);
             clearInputs();
         });
 
@@ -157,8 +157,11 @@ public class ItemProfileController implements Initializable {
 
     private void initializeScene(Roles role) {
         btnUpdate.setDisable(true);
-        if (!(role.equals(Roles.PURCHASER) || role.equals(Roles.OWNER) || role.equals(Roles.INVENTORY_MANAGER)))
+        tblItems.setVisible(false);
+        if (!(role.equals(Roles.PURCHASER) || role.equals(Roles.OWNER) || role.equals(Roles.INVENTORY_MANAGER))) {
             btnCreate.setDisable(true);
+            btnClear.setDisable(true);
+        }
         if (!(role.equals(Roles.OWNER) || role.equals(Roles.PURCHASER))) {
             tfSearch.setVisible(false);
             tfSearch.setManaged(false);
