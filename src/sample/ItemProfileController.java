@@ -53,6 +53,8 @@ public class ItemProfileController implements Initializable {
     @FXML
     private Button btnUpdate;
     @FXML
+    private Button btnRefresh;
+    @FXML
     private TableColumn<Item, Integer> colId;
     @FXML
     private TableColumn<Item, String> colName;
@@ -140,11 +142,33 @@ public class ItemProfileController implements Initializable {
             clearInputs();
         });
 
+        btnRefresh.setOnAction(e -> {
+            try {
+                displayTable();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        });
+
         btnBack.setOnAction(event -> {
             try {
                 Stage stage = new Stage();
                 FXMLLoader loader = new FXMLLoader();
                 Pane root = loader.load(getClass().getResource("Dashboard.fxml").openStream());
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+                ((Node) event.getSource()).getScene().getWindow().hide();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        });
+
+        btnLogout.setOnAction(event -> {
+            try {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader();
+                Pane root = loader.load(getClass().getResource("LoginScreen.fxml").openStream());
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
