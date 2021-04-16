@@ -1,14 +1,13 @@
 package sample;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -16,7 +15,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -116,7 +114,7 @@ public class CustomerInvoiceController implements Initializable {
     @FXML
     private Button btnLogout;
 
-    DB_Connection con;
+    DBConnection con;
     Connection connection;
 
 
@@ -128,7 +126,7 @@ public class CustomerInvoiceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        con = new DB_Connection();
+        con = new DBConnection();
         connection = con.getConnection();
 
         paneRecipt.setVisible(false);
@@ -187,7 +185,7 @@ public class CustomerInvoiceController implements Initializable {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDateTime now = LocalDateTime.now();
         try {
-            String query = "Select * from distributer.customerorder where id = '" + idfromdb + "'";
+            String query = "Select * from distributor.customerorder where id = '" + idfromdb + "'";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query);
 
@@ -229,7 +227,7 @@ public class CustomerInvoiceController implements Initializable {
                 c5.setText(rs.getString(25));
             }
 
-            query = "Select * from distributer.customerinvoice";
+            query = "Select * from distributor.customerinvoice";
             s = connection.createStatement();
             rs = s.executeQuery(query);
             int temp = 0;
@@ -240,10 +238,10 @@ public class CustomerInvoiceController implements Initializable {
 
 
             s = connection.createStatement();
-            query = "INSERT INTO distributer.customerinvoice(customerorderid, invoicedate, orderdate) VALUES ('" + customer_order_no.getText() + "','" + dtf.format(now) + "','" + order_date.getText() + "'  )";
+            query = "INSERT INTO distributor.customerinvoice(customerorderid, invoicedate, orderdate) VALUES ('" + customer_order_no.getText() + "','" + dtf.format(now) + "','" + order_date.getText() + "'  )";
             s.execute(query);
 
-            query = "update distributer.customerorder set status = '" + "active" + "' where id = '" + customer_order_no.getText() + "'";
+            query = "update distributor.customerorder set status = '" + "active" + "' where id = '" + customer_order_no.getText() + "'";
             s = connection.createStatement();
             s.execute(query);
 
@@ -255,7 +253,7 @@ public class CustomerInvoiceController implements Initializable {
 
     public void addingOrdersToCombo(){
         try {
-            String query = "Select givencustomername,id from distributer.customerorder where status = '" + "deactive" + "'";
+            String query = "Select givencustomername,id from distributor.customerorder where status = '" + "deactive" + "'";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query);
 

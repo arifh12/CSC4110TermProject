@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class CustomerOrderController implements Initializable {
 
 
-    DB_Connection con;
+    DBConnection con;
     Connection connection;
 
     @FXML
@@ -133,7 +133,7 @@ public class CustomerOrderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        con = new DB_Connection();
+        con = new DBConnection();
         connection = con.getConnection();
 
         updateVendorAndItems();
@@ -327,7 +327,7 @@ public class CustomerOrderController implements Initializable {
         System.out.println(dtf.format(now));
         try {   // if the name is alphabet and status is not null then category is added to database
             Statement s = connection.createStatement();
-            String q = "INSERT INTO distributer.customerorder(givencustomername, subtotal, orderdate, status, item1, need1, quantity1, totalcost1, item2, need2, quantity2, totalcost2, item3, need3, quantity3, totalcost3, item4, need4, quantity4, totalcost4, item5, need5, quantity5, totalcost5) VALUES ('" + cSelectVendor.getValue() + "','" + lblTotaCostl.getText() + "','" + dtf.format(now) + "','" + "deactive" + "','" + citem1.getValue() + "','" + dneed1.getValue() + "','" + txtq1.getText() + "','" + total1.getText() + "','" + citem2.getValue() + "','" + dneed2.getValue() + "','" + txtq2.getText() + "','" + total2.getText() + "','" + citem3.getValue() + "','" + dneed3.getValue() + "','" + txtq3.getText() + "','" + total3.getText() + "','" + citem4.getValue() + "','" + dneed4.getValue() + "','" + txtq4.getText() + "','" + total4.getText() + "','" + citem5.getValue() + "','" + dneed5.getValue() + "','" + txtq5.getText() + "','" + total5.getText() + "'  )";
+            String q = "INSERT INTO distributor.customerorder(givencustomername, subtotal, orderdate, status, item1, need1, quantity1, totalcost1, item2, need2, quantity2, totalcost2, item3, need3, quantity3, totalcost3, item4, need4, quantity4, totalcost4, item5, need5, quantity5, totalcost5) VALUES ('" + cSelectVendor.getValue() + "','" + lblTotaCostl.getText() + "','" + dtf.format(now) + "','" + "deactive" + "','" + citem1.getValue() + "','" + dneed1.getValue() + "','" + txtq1.getText() + "','" + total1.getText() + "','" + citem2.getValue() + "','" + dneed2.getValue() + "','" + txtq2.getText() + "','" + total2.getText() + "','" + citem3.getValue() + "','" + dneed3.getValue() + "','" + txtq3.getText() + "','" + total3.getText() + "','" + citem4.getValue() + "','" + dneed4.getValue() + "','" + txtq4.getText() + "','" + total4.getText() + "','" + citem5.getValue() + "','" + dneed5.getValue() + "','" + txtq5.getText() + "','" + total5.getText() + "'  )";
             s.execute(q);
             AlertController a = new AlertController(Alert.AlertType.INFORMATION, null, "Order Created Successfully");
 
@@ -338,12 +338,12 @@ public class CustomerOrderController implements Initializable {
 
     public void updatingCustomerBalance(){
         try {       // updating the brand table
-            String query1 = "Select balance from distributer.customer where fname = '" + cSelectVendor.getValue() + "'";
+            String query1 = "Select balance from distributor.customer where fname = '" + cSelectVendor.getValue() + "'";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query1);
             rs.next();
             double balance = Double.valueOf(rs.getString(1))-Double.valueOf(lblTotaCostl.getText());
-            query1 = "update distributer.customer set balance = '" + balance + "' where fname = '" + cSelectVendor.getValue() + "'";
+            query1 = "update distributor.customer set balance = '" + balance + "' where fname = '" + cSelectVendor.getValue() + "'";
             s = connection.createStatement();
             s.execute(query1);
 
@@ -356,7 +356,7 @@ public class CustomerOrderController implements Initializable {
 
 
         try {       // updating the brand table
-            String query1 = "Select quantityonhand from distributer.item where itemname = '" + item + "'";
+            String query1 = "Select quantityonhand from distributor.item where name = '" + item + "'";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query1);
             rs.next();
@@ -377,13 +377,13 @@ public class CustomerOrderController implements Initializable {
 
 
         try {       // updating the brand table
-            String query1 = "Select quantityonhand from distributer.item where itemname = '" + item + "'";
+            String query1 = "Select quantityonhand from distributor.item where name = '" + item + "'";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query1);
             rs.next();
             int quantity = Integer.parseInt(rs.getString(1))-Integer.parseInt(txt.getText());
             if(quantity >= 0){
-                query1 = "update distributer.item set quantityonhand = '" + quantity + "' where itemname = '" + item + "'";
+                query1 = "update distributor.item set quantityonhand = '" + quantity + "' where name = '" + item + "'";
                 s = connection.createStatement();
                 s.execute(query1);
             }else{
@@ -399,7 +399,7 @@ public class CustomerOrderController implements Initializable {
         try {
 
 
-            String query = "Select purchaseprice from distributer.item where itemname = '" + item + "'";
+            String query = "Select purchaseprice from distributor.item where name = '" + item + "'";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query);
 
@@ -420,7 +420,7 @@ public class CustomerOrderController implements Initializable {
     }
     public void updateVendorAndItems(){
         try {
-            String query = "Select fname from distributer.customer";
+            String query = "Select fname from distributor.customer";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query);
 
@@ -428,7 +428,7 @@ public class CustomerOrderController implements Initializable {
                 cSelectVendor.getItems().add(rs.getString(1));
             }
 
-            query = "Select itemname from distributer.item";
+            query = "Select name from distributor.item";
             s = connection.createStatement();
             rs = s.executeQuery(query);
 

@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -94,6 +95,12 @@ public class VendorCustomerController implements Initializable {
     @FXML
     private Button btnSearch;
 
+    @FXML
+    private Button btnLogout;
+
+    int id = 0;
+    double balance = 0;
+
 
     /**
      * Initializes the controller class.
@@ -116,16 +123,20 @@ public class VendorCustomerController implements Initializable {
                 Statement s = connection.createStatement();
                 ResultSet rs = s.executeQuery("Select * from distributor.vendor where fname = '" + txrSearch.getText() + "' OR id = '" + txrSearch.getText() + "'");
                 if(rs.next()) {
+                    id = rs.getInt("id");
                     txtid.setText(rs.getInt("id")+"");
                     txtFullName.setText(rs.getString(2));
                     txtStaddress.setText(rs.getString(3));
                     txtCity.setText(rs.getString(4));
                     txtState.setValue(rs.getString(5));
                     txtPhn.setText(rs.getString(6));
+                    balance = Double.valueOf(rs.getString(7));
                     txtBalance.setText(rs.getString(7));
                     txtLastPaid.setText(rs.getString(8));
                     txtLastOrder.setValue(LocalDate.parse(rs.getString(9)));
                     txtSessional.setValue(LocalDate.parse(rs.getString(10)));
+
+                    txtFullName.setEditable(false);
                 }
                 else{
 
@@ -154,8 +165,14 @@ public class VendorCustomerController implements Initializable {
             String phone = txtPhn.getText();
             String balance = txtBalance.getText();
             String lastPaid = txtLastPaid.getText();
-            String lastdate = txtLastOrder.getValue().toString();
-            String sessional = txtSessional.getValue().toString();
+            String lastdate = "";
+            String sessional = "";
+            try {
+                lastdate = txtLastOrder.getValue().toString();
+                sessional = txtSessional.getValue().toString();
+            }catch(Exception e){
+
+            }
 
             try {
                 String query = "Select fname from distributor.vendor";
@@ -171,8 +188,12 @@ public class VendorCustomerController implements Initializable {
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
+            int check = 0;
+            if(ErrorController.nameChecker(name,20,"Company Full Name") && ErrorController.strChecker(address,20,"Street Address") && ErrorController.nameChecker(city,20,"City") && state!=null && ErrorController.phnChecker(phone) && ErrorController.phnChecker(phone) && ErrorController.numChecker(balance,"Balance") && ErrorController.numChecker(lastPaid,"Last Paid") && ErrorController.pastChecker(lastdate) && ErrorController.pastChecker(sessional)){
+                check = 1;
+            }
 
-            if(duplicate == 0) {
+            if(duplicate == 0 && check == 1) {
                 try {   // if the name is alphabet and status is not null then category is added to database
                     Statement s = connection.createStatement();
                     String q = "INSERT INTO distributor.vendor(fname, staddress, city, state, phone, balance, lastpaidamount, lastorderdate, sessionaldiscountstartdate) VALUES ('" + name + "','" + address + "','" + city + "','" + state + "','" + phone + "','" + balance + "','" + lastPaid + "','" + lastdate + "','" + sessional + "'  )";
@@ -181,6 +202,47 @@ public class VendorCustomerController implements Initializable {
                     // setDefault();
 
                     AlertController a = new AlertController(Alert.AlertType.INFORMATION, null, "Successfully Added");
+                    setDefault();
+                    clear();
+
+                } catch (Exception ex) {
+                    System.out.println(ex.toString());
+                }
+            }
+
+        });
+        btnUpdate.setOnAction(event -> {
+            String name = txtFullName.getText();
+            String address = txtStaddress.getText();
+            String city = txtCity.getText();
+            String state = txtState.getValue();
+            String phone = txtPhn.getText();
+            String balance = txtBalance.getText();
+            String lastPaid = txtLastPaid.getText();
+            String lastdate = "";
+            String sessional = "";
+            try {
+                lastdate = txtLastOrder.getValue().toString();
+                sessional = txtSessional.getValue().toString();
+            }catch(Exception e){
+
+            }
+            int check = 0;
+            if(ErrorController.strChecker(address,20,"Street Address") && ErrorController.nameChecker(city,20,"City") && state!=null && ErrorController.phnChecker(phone) && ErrorController.phnChecker(phone) && ErrorController.numChecker(balance,"Balance") && ErrorController.numChecker(lastPaid,"Last Paid")){
+                check = 1;
+            }
+            if(check == 1) {
+                try {   // if the name is alphabet and status is not null then category is added to database
+                    Statement s = connection.createStatement();
+                    String q = "UPDATE distributor.vendor SET staddress = '" + address + "', city ='" + city + "',state ='" + state + "', phone ='" + phone + "',balance= '" + balance + "', lastpaidamount = '" + lastPaid + "', lastorderdate ='" + lastdate + "', sessionaldiscountstartdate ='" + sessional + "' where id = '" + id + "'";
+                    s.execute(q);
+
+                    AlertController a = new AlertController(Alert.AlertType.INFORMATION, null, "Successfully Updated");
+                    setDefault();
+                    clear();
+                    btnUpdate.setVisible(false);
+                    btnCreate.setVisible(true);
+                    txtFullName.setEditable(true);
 
                 } catch (Exception ex) {
                     System.out.println(ex.toString());
@@ -189,21 +251,51 @@ public class VendorCustomerController implements Initializable {
 
         });
 
+        btnDelete.setOnAction(event -> {
+            if(balance == 0) {
+                String query1 = "delete from distributor.vendor where id = '" + id + "'";
+                try {
+                    if (txtFullName.getLength() >= 1) {
+                        Statement s = connection.createStatement();
+                        s.execute(query1);
 
+                        setDefault();
+
+                        AlertController a = new AlertController(Alert.AlertType.INFORMATION, null, "Successfully Deleted");
+                        clear();
+                    } else {
+                        AlertController a = new AlertController(Alert.AlertType.WARNING, null, "Search a user then press delete Button");
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex.toString());
+                }
+            }else{
+                AlertController a = new AlertController(Alert.AlertType.WARNING, null, "the balance is not zero");
+            }
+        });
+
+        btnLogout.setOnAction(event -> {
+            try {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader();
+                Pane root = loader.load(getClass().getResource("LoginScreen.fxml").openStream());
+                LoginScreenController Msg = (LoginScreenController) loader.getController();
+                Scene scene = new Scene(root);
+                scene.getStylesheets().setAll(
+                        getClass().getResource("style.css").toExternalForm()
+                );
+                stage.setScene(scene);
+                stage.show();
+                ((Node) event.getSource()).getScene().getWindow().hide();
+
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+
+        });
 
         btnClear.setOnAction(event -> {
-            txtid.clear();
-            txtFullName.clear();
-            txtStaddress.clear();
-            txtCity.clear();
-            txtState.setValue(null);
-            txtPhn.clear();
-            txtBalance.clear();
-            txtLastPaid.clear();
-            txtLastOrder.setValue(null);
-            txtSessional.setValue(null);
-            btnCreate.setVisible(true);
-            btnUpdate.setVisible(false);
+            clear();
         });
 
         btnBack.setOnAction(event -> {
@@ -213,9 +305,9 @@ public class VendorCustomerController implements Initializable {
                 Pane root = loader.load(getClass().getResource("Dashboard.fxml").openStream());
                 DashboardController Msg = (DashboardController) loader.getController();
                 Scene scene = new Scene(root);
-                //scene.getStylesheets().setAll(
-                //      getClass().getResource("style.css").toExternalForm()
-                //);
+                scene.getStylesheets().setAll(
+                        getClass().getResource("style.css").toExternalForm()
+                );
                 stage.setScene(scene);
                 stage.show();
                 ((Node) event.getSource()).getScene().getWindow().hide();
@@ -226,15 +318,31 @@ public class VendorCustomerController implements Initializable {
         });
 
     }
+    public void clear(){
+        txtid.clear();
+        txtFullName.clear();
+        txtStaddress.clear();
+        txtCity.clear();
+        txtState.setValue(null);
+        txtPhn.clear();
+        txtBalance.clear();
+        txtLastPaid.clear();
+        txtLastOrder.setValue(null);
+        txtSessional.setValue(null);
+        btnCreate.setVisible(true);
+        btnUpdate.setVisible(false);
+        txtFullName.setEditable(true);
+    }
+
     public void setDefault() {
 
         ObservableList<VendorCustomer> n = FXCollections.observableArrayList();
         try {
             String query;
 
-                query = "Select * from distributor.vendor";
+            query = "Select * from distributor.vendor";
 
-                //query = "Select * from distributor.vendor where fname Like '%" + txrSearch.getText() + "%'";
+            //query = "Select * from distributor.vendor where fname Like '%" + txrSearch.getText() + "%'";
 
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query);

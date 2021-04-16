@@ -2,19 +2,80 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="542.0" prefWidth="848.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.UserProfileController">
+<AnchorPane prefHeight="560.0" prefWidth="900.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.UserProfileController">
    <children>
-      <TextField fx:id="txtFirst" layoutX="201.0" layoutY="94.0" promptText="First Name" />
-      <TextField fx:id="txtLast" layoutX="201.0" layoutY="131.0" promptText="Last Name" />
-      <TextField fx:id="txtUserid" layoutX="201.0" layoutY="172.0" promptText="User ID" />
-      <ComboBox fx:id="cRole" layoutX="199.0" layoutY="388.0" prefWidth="150.0" promptText="Role" />
-      <Button fx:id="btnCreate" layoutX="201.0" layoutY="460.0" mnemonicParsing="false" text="Create" />
-      <Button fx:id="btnBack" layoutX="308.0" layoutY="460.0" mnemonicParsing="false" text="Back" />
-      <PasswordField fx:id="txtPass" layoutX="201.0" layoutY="271.0" promptText="Password" />
-      <PasswordField fx:id="txtConfirm" layoutX="201.0" layoutY="306.0" promptText="Confirm Password" />
+      <VBox layoutX="53.0" layoutY="205.0" spacing="3.0">
+         <children>
+            <TextField fx:id="txtFirst" promptText="First Name" />
+            <TextField fx:id="txtLast" promptText="Last Name" />
+            <TextField fx:id="txtUserid" promptText="User ID" />
+            <PasswordField fx:id="txtPass" promptText="Password" />
+            <PasswordField fx:id="txtConfirm" promptText="Confirm Password" />
+            <ComboBox fx:id="cRole" prefHeight="26.0" prefWidth="182.0" promptText="Role" />
+            <Button fx:id="btnCreate" mnemonicParsing="false" prefHeight="39.0" prefWidth="186.0" style="-fx-background-radius: 0.7em;" text="Create" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Button>
+         </children>
+      </VBox>
+      <TableView fx:id="tblUser" layoutX="377.0" layoutY="177.0" prefHeight="297.0" prefWidth="459.0">
+         <columns>
+            <TableColumn fx:id="cid" editable="false" prefWidth="75.0" resizable="false" text="ID" />
+            <TableColumn fx:id="cfname" editable="false" prefWidth="119.199951171875" resizable="false" text="First Name" />
+            <TableColumn fx:id="clname" editable="false" minWidth="6.4000244140625" prefWidth="118.39996337890625" resizable="false" text="Last Name" />
+            <TableColumn fx:id="crole" editable="false" prefWidth="147.2000732421875" resizable="false" text="Role" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnDelete" layoutX="53.0" layoutY="501.0" mnemonicParsing="false" style="-fx-background-radius: 0.7em;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+      <Button fx:id="btnUpdate" layoutX="53.0" layoutY="455.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="186.0" style="-fx-background-radius: 0.7em;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+      <Button fx:id="btnSearch" layoutX="258.0" layoutY="158.0" mnemonicParsing="false" style="-fx-background-radius: 0.7em;" text="Search" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+      <TextField fx:id="txtSearch" layoutX="53.0" layoutY="161.0" promptText="Search" />
+      <Button fx:id="btnClear" layoutX="172.0" layoutY="501.0" mnemonicParsing="false" style="-fx-background-radius: 0.7em;" text="Clear" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+      <Pane layoutX="-23.0" prefHeight="135.0" prefWidth="923.0" style="-fx-background-color: #2D75E8;">
+         <children>
+            <Label layoutX="139.0" layoutY="30.0" text="User Profile" textFill="WHITE">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <Label layoutX="145.0" layoutY="91.0" text="Food Distribution System" textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnLogout" layoutX="804.0" layoutY="54.0" mnemonicParsing="false" text="&lt;LogOut" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnBack" layoutX="45.0" layoutY="54.0" mnemonicParsing="false" style="-fx-background-radius: 0.7em;" text="&lt;Back" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

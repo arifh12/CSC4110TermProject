@@ -53,8 +53,6 @@ public class ItemProfileController implements Initializable {
     @FXML
     private Button btnUpdate;
     @FXML
-    private Button btnRefresh;
-    @FXML
     private TableColumn<Item, Integer> colId;
     @FXML
     private TableColumn<Item, String> colName;
@@ -75,7 +73,7 @@ public class ItemProfileController implements Initializable {
     static final Session user = Session.USER;
     final int MAX_NAME_LENGTH = 20;
 
-    private ItemDAO itemDAO = new ItemDAO();
+    private final ItemDAO itemDAO = new ItemDAO();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -116,6 +114,8 @@ public class ItemProfileController implements Initializable {
                     itemDAO.insert(item);
                     AlertController a = new AlertController(Alert.AlertType.INFORMATION,
                             "Success", "Item has been added successfully!");
+                    btnClear.fire();
+                    displayTable();
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
@@ -142,20 +142,15 @@ public class ItemProfileController implements Initializable {
             clearInputs();
         });
 
-        btnRefresh.setOnAction(e -> {
-            try {
-                displayTable();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-        });
-
         btnBack.setOnAction(event -> {
             try {
                 Stage stage = new Stage();
                 FXMLLoader loader = new FXMLLoader();
                 Pane root = loader.load(getClass().getResource("Dashboard.fxml").openStream());
                 Scene scene = new Scene(root);
+                scene.getStylesheets().setAll(
+                        getClass().getResource("style.css").toExternalForm()
+                );
                 stage.setScene(scene);
                 stage.show();
                 ((Node) event.getSource()).getScene().getWindow().hide();
@@ -267,8 +262,8 @@ public class ItemProfileController implements Initializable {
                     itemDAO.update(item);
                     AlertController a = new AlertController(Alert.AlertType.INFORMATION,
                             "Success", "Item has been updated successfully!");
-                    btnUpdate.setDisable(true);
-                    btnCreate.setDisable(false);
+                    btnClear.fire();
+                    displayTable();
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
