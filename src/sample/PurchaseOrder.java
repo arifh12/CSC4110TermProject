@@ -5,8 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class PurchaseOrder {
     Item item;
-    SimpleStringProperty itemName;
-    SimpleStringProperty needBy, subtotal;
+    SimpleStringProperty itemName, needBy, subtotal;
     SimpleDoubleProperty quantity;
 
     public PurchaseOrder(Item item, String needBy,

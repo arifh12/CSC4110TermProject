@@ -190,7 +190,7 @@ public class PurchaseOrderController implements Initializable {
         });
     }
 
-    private void initializeTable() {
+    public void initializeTable() {
         colItem.setCellValueFactory(new PropertyValueFactory<>("itemName"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colNeedBy.setCellValueFactory(new PropertyValueFactory<>("needBy"));
@@ -199,7 +199,7 @@ public class PurchaseOrderController implements Initializable {
         tblOrder.setItems(orderList);
     }
 
-    private Callback<DatePicker, DateCell> getMinNeedByCalendar() {
+    public Callback<DatePicker, DateCell> getMinNeedByCalendar() {
         return new Callback<>() {
             @Override
             public DateCell call(final DatePicker datePicker) {
@@ -217,7 +217,7 @@ public class PurchaseOrderController implements Initializable {
         };
     }
 
-    private boolean inputValidation() {
+    public boolean inputValidation() {
         if (cbItem.getValue() == null || cbItem.getValue().isBlank())
             return false;
         if (dateNeedBy.getValue() == null)
@@ -230,7 +230,7 @@ public class PurchaseOrderController implements Initializable {
         return true;
     }
 
-    private void addToPurchaseOrder() {
+    public void addToPurchaseOrder() {
         String itemName = cbItem.getValue();
         String needBy = String.valueOf(dateNeedBy.getValue());
         double quantity = Double.parseDouble(tfQuantity.getText());
@@ -243,7 +243,7 @@ public class PurchaseOrderController implements Initializable {
         tfTotal.setText(String.format("$%.2f", total));
     }
 
-    private void clearAll() {
+    public void clearAll() {
         btnAdd.setDisable(false);
         btnSubmit.setDisable(false);
         total = 0;

@@ -70,7 +70,7 @@ public class ItemProfileController implements Initializable {
     private final ObservableList<String> UNIT_MEASUREMENT = FXCollections.observableArrayList(
             "Pound", "Gallon", "Dozen");
     private final LocalDate MIN_EXP_DATE = LocalDate.now();
-    static final Session user = Session.USER;
+    private static final Session user = Session.USER;
     final int MAX_NAME_LENGTH = 20;
 
     private final ItemDAO itemDAO = new ItemDAO();
@@ -174,7 +174,7 @@ public class ItemProfileController implements Initializable {
         });
     }
 
-    private void initializeScene(Roles role) {
+    public void initializeScene(Roles role) {
         btnUpdate.setDisable(true);
         tblItems.setVisible(false);
         if (!(role.equals(Roles.PURCHASER) || role.equals(Roles.OWNER) || role.equals(Roles.INVENTORY_MANAGER))) {
@@ -197,7 +197,7 @@ public class ItemProfileController implements Initializable {
         }
     }
 
-    private SpinnerValueFactory<Double> getDecimalSpinner() {
+    public SpinnerValueFactory<Double> getDecimalSpinner() {
         final double MIN = 0.00;
         final double MAX = Double.MAX_VALUE;
         final double INITIAL = 0.00;
@@ -206,7 +206,7 @@ public class ItemProfileController implements Initializable {
         return new SpinnerValueFactory.DoubleSpinnerValueFactory(MIN, MAX, INITIAL, INCREMENT);
     }
 
-    private Callback<DatePicker, DateCell> getMinExpCalendar() {
+    public Callback<DatePicker, DateCell> getMinExpCalendar() {
         return new Callback<>() {
             @Override
             public DateCell call(final DatePicker datePicker) {
@@ -224,7 +224,7 @@ public class ItemProfileController implements Initializable {
         };
     }
 
-    private Item readInputIntoItem() {
+    public Item readInputIntoItem() {
         Item item = new Item();
 
         item.setName(tfName.getText());
