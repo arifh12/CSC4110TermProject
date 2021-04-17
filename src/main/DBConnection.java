@@ -67,12 +67,6 @@ public class DBConnection {
         Connection connection = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            //  String host = "database-1.cfpfdldjn2bz.us-east-1.rds.amazonaws.com";
-            //  String username = "musman";
-            //  String password = "Java3365";
-            //  String port = "3306";
-            //connection = DriverManager.getConnection("jdbc:mysql://database-1.cfpfdldjn2bz.us-east-1.rds.amazonaws.com:3306/database-1", username, password);
-            // tg
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?serverTimezone=UTC", "root", "password");
 
         } catch (Exception e) {
