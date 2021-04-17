@@ -7,5 +7,5 @@ module FoodDistributor {
     // SQL import declaration
     requires java.sql;
 
-    opens sample;
+    opens main;
 }

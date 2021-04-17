@@ -1,4 +1,4 @@
-package sample;
+package main;
 
 public enum Roles {
     OWNER, ADMINISTRATOR, INVENTORY_MANAGER, PURCHASER, ACCOUNTANT, SALES_PERSON

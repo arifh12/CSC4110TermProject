@@ -1,4 +1,4 @@
-package sample;
+package main;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,13 +7,10 @@ package sample;
 
 
 import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class ErrorController {
