@@ -4,13 +4,37 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * <h1>Item</h1>
+ * <p>
+ *     This class stores the data relating to a single item. It is used for creating an item profile and easily storing
+ *     the data read from the database since the properties correspond to the columns of the item table.
+ * </p>
+ *
+ * @author Arif Hasan
+ * @version 1.0
+ * @since 03/19/21
+ */
 public class Item {
+
+    // SimpleObjectProperties enable the JavaFX table to be updated dynamically when any of the properties change.
     private SimpleIntegerProperty id, vendorId;
     private SimpleStringProperty name, category, expDate, unit;
     private SimpleDoubleProperty sellingPrice, purchasePrice, quantity;
 
+    /**
+     * Constructor to allow for a blank object to be created when nothing is passed in as parameters.
+     */
     public Item() {};
 
+    /**
+     * Constructor with 4 parameters, which is the maximum as we have learned in class.
+     *
+     * @param id unique auto-generated item id
+     * @param name name of the item provided by the user
+     * @param vendorId selected vendor ID by user
+     * @param sellingPrice decimal selling price of the item
+     */
     public Item(int id, String name, int vendorId, double sellingPrice) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
@@ -18,6 +42,7 @@ public class Item {
         this.sellingPrice = new SimpleDoubleProperty(sellingPrice);
     }
 
+    // Setters and getters; conversion to SimpleObjectProperty is done internally.
     public int getId() { return id.get(); }
     public void setId(int id) { this.id = new SimpleIntegerProperty(id); }
 

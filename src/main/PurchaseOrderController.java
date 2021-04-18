@@ -22,8 +22,21 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * <h1>PurchaseOrderController</h1>
+ * <p>
+ *     This class is used for handling of the inputs from and outputs to PurchaseOrder.fxml. It uses a builder design
+ *     pattern in order to create a Purchase Order from PurchaseOrder, Item, and PurchaseOrderDAO objects. This class
+ *     is primarily responsible for facilitating the data between the front-end and the back-end of the application.
+ * </p>
+ *
+ * @author Arif Hasan
+ * @version 1.0
+ * @since 03/29/21
+ */
 public class PurchaseOrderController implements Initializable {
 
+    // JavaFX GUI component declarations
     @FXML
     private TextField tfSearch;
     @FXML
@@ -72,19 +85,29 @@ public class PurchaseOrderController implements Initializable {
     private ObservableList<PurchaseOrder> orderList;
     private double total = 0;
 
+    /**
+     * All the GUI components of the Purchase Order are initialized when the window is opened.
+     *
+     * @param url auto-generated parameter; not used
+     * @param resourceBundle auto-generated parameter; not used
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         orderList = FXCollections.observableArrayList();
 
+        // Retrieves a list of existing purchase ID's
         try {
             purchaseIdList = purchaseDAO.getPurchaseIds("");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
+        // Hide the purchase order controls until a vendor is searched
         paneOrder.setVisible(false);
         dateNeedBy.setDayCellFactory(getMinNeedByCalendar());
         initializeTable();
+
+        // Restricting inputs to numeric/decimal
         tfQuantity.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldVal, String newVal) {
@@ -93,6 +116,7 @@ public class PurchaseOrderController implements Initializable {
             }
         });
 
+        // Listeners for each of the buttons
         btnSearch.setOnAction(event -> {
             clearAll();
             vendorName = tfSearch.getText();
@@ -185,6 +209,9 @@ public class PurchaseOrderController implements Initializable {
         });
     }
 
+    /**
+     * This method is used for the initialization of the table that displays the full purchase order.
+     */
     public void initializeTable() {
         colItem.setCellValueFactory(new PropertyValueFactory<>("itemName"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -194,6 +221,11 @@ public class PurchaseOrderController implements Initializable {
         tblOrder.setItems(orderList);
     }
 
+    /**
+     * This method is to ensure that the user is not allowed to select a previous date as the 'need by' date.
+     *
+     * @return Callback object for the calendar which restricts past dates
+     */
     public Callback<DatePicker, DateCell> getMinNeedByCalendar() {
         return new Callback<>() {
             @Override
@@ -212,6 +244,11 @@ public class PurchaseOrderController implements Initializable {
         };
     }
 
+    /**
+     * Ensures that all fields contain valid information.
+     *
+     * @return <code>true</code> if all the inputs are valid; otherwise, <code>false</code>.
+     */
     public boolean inputValidation() {
         if (cbItem.getValue() == null || cbItem.getValue().isBlank())
             return false;
@@ -225,6 +262,9 @@ public class PurchaseOrderController implements Initializable {
         return true;
     }
 
+    /**
+     * Adds the entered item to the purchase order and updates the total.
+     */
     public void addToPurchaseOrder() {
         String itemName = cbItem.getValue();
         String needBy = String.valueOf(dateNeedBy.getValue());
@@ -238,6 +278,9 @@ public class PurchaseOrderController implements Initializable {
         tfTotal.setText(String.format("$%.2f", total));
     }
 
+    /**
+     * Resets all the input fields to original state.
+     */
     public void clearAll() {
         btnAdd.setDisable(false);
         btnSubmit.setDisable(false);
@@ -251,6 +294,9 @@ public class PurchaseOrderController implements Initializable {
             orderList.clear();
     }
 
+    /**
+     * Uses PurchaseOrderDAO to add the entered purchase order to the database.
+     */
     public void submitPurchaseOrder() {
         try {
             int purchaseId = purchaseIdList.isEmpty() ?

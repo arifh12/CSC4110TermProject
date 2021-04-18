@@ -18,8 +18,21 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+/**
+ * <h1>ItemProfileController</h1>
+ * <p>
+ *     This class handles all the inputs and generates the appropriate outputs to be displayed on ItemProfile.fxml.
+ *     The main purpose of this class is to act as the mediator between the front-end and the back-end. It uses Item
+ *     and ItemDAO objects to facilitate all the interactions between the user and the database.
+ * </p>
+ *
+ * @author Arif Hasan
+ * @version 1.0
+ * @since 03/19/21
+ */
 public class ItemProfileController implements Initializable {
 
+    // JavaFX GUI component declarations
     @FXML
     private TextField tfName;
     @FXML
@@ -75,6 +88,12 @@ public class ItemProfileController implements Initializable {
 
     private final ItemDAO itemDAO = new ItemDAO();
 
+    /**
+     * All the GUI components are initialized when the window is opened.
+     *
+     * @param url auto-generated parameter; not used
+     * @param resourceBundle auto-generated parameter; not used
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Roles role = user.getRole();
@@ -93,6 +112,7 @@ public class ItemProfileController implements Initializable {
             System.out.println(e.getMessage());
         }
 
+        // Restricting name length to a maximum of 20 characters
         tfName.setOnKeyTyped(t -> {
             if (tfName.getText().length() > MAX_NAME_LENGTH) {
                 int pos = tfName.getCaretPosition();
@@ -174,6 +194,11 @@ public class ItemProfileController implements Initializable {
         });
     }
 
+    /**
+     * The window displays the appropriate controls based on the role of the user.
+     *
+     * @param role current user role
+     */
     public void initializeScene(Roles role) {
         btnUpdate.setDisable(true);
         tblItems.setVisible(false);
@@ -197,6 +222,11 @@ public class ItemProfileController implements Initializable {
         }
     }
 
+    /**
+     * Method to restrict invalid entries for decimal inputs.
+     *
+     * @return DoubleSpinnerValueFactory that only accepts decimal inputs and increments by 0.01
+     */
     public SpinnerValueFactory<Double> getDecimalSpinner() {
         final double MIN = 0.00;
         final double MAX = Double.MAX_VALUE;
@@ -206,6 +236,11 @@ public class ItemProfileController implements Initializable {
         return new SpinnerValueFactory.DoubleSpinnerValueFactory(MIN, MAX, INITIAL, INCREMENT);
     }
 
+    /**
+     * This method is to ensure that the user is not allowed to select a previous date as the expiration date.
+     *
+     * @return Callback object for the calendar which restricts past dates
+     */
     public Callback<DatePicker, DateCell> getMinExpCalendar() {
         return new Callback<>() {
             @Override
@@ -224,6 +259,11 @@ public class ItemProfileController implements Initializable {
         };
     }
 
+    /**
+     * Reads the inputs from the screen into a single item object.
+     *
+     * @return Item object containing all the inputs from the user
+     */
     public Item readInputIntoItem() {
         Item item = new Item();
 
@@ -239,6 +279,12 @@ public class ItemProfileController implements Initializable {
         return item;
     }
 
+    /**
+     * This method uses the provided searched Item object and displays all the associated information onto the screen.
+     * Users have the option to update the item's information.
+     *
+     * @param searchResult
+     */
     public void displaySearchedItem(Item searchResult) {
         tfName.setText(searchResult.getName());
         cbVendorId.setValue(searchResult.getVendorId());
@@ -249,6 +295,7 @@ public class ItemProfileController implements Initializable {
         cbUnit.setValue(searchResult.getUnit());
         spQuantity.getValueFactory().setValue(searchResult.getQuantity());
 
+        // Enable update when searched item is found.
         btnUpdate.setDisable(false);
         btnCreate.setDisable(true);
         btnUpdate.setOnAction(e -> {
@@ -271,6 +318,9 @@ public class ItemProfileController implements Initializable {
         });
     }
 
+    /**
+     * This methods resets all the input fields back to their initial states.
+     */
     public void clearInputs() {
         tfSearch.clear();
         tfName.clear();
@@ -283,6 +333,12 @@ public class ItemProfileController implements Initializable {
         spQuantity.getValueFactory().setValue(0.00);
     }
 
+    /**
+     * Uses the ItemDAO class to retrieve all the items from the database and display them on the on-screen table. The
+     * corresponding information of each item is separated into columns and every item is listed as a row.
+     *
+     * @throws SQLException
+     */
     public void displayTable() throws SQLException {
         ObservableList<Item> itemList = FXCollections.observableArrayList(itemDAO.getAllItems());
 
@@ -296,6 +352,11 @@ public class ItemProfileController implements Initializable {
         tblItems.setItems(itemList);
     }
 
+    /**
+     * Checks for empty fields where input in required and returns the appropriate boolean value
+     *
+     * @return <code>true</code> if an empty field exists; otherwise <code>false</code>
+     */
     public boolean hasEmptyFields() {
         if (tfName.getText().isEmpty() || cbCategory.getValue().isEmpty() || cbUnit.getValue().isEmpty()) {
             return true;

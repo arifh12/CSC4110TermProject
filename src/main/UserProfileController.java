@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class UserProfileController implements Initializable {
@@ -138,8 +139,9 @@ public class UserProfileController implements Initializable {
             String lname = txtLast.getText();
             String userid = txtUserid.getText();
             String pass = txtPass.getText();
+            String pass2 = txtConfirm.getText();
             System.out.println("1");
-            if(ErrorController.nameChecker(fname,15,"First Name") && ErrorController.nameChecker(lname,15,"Last Name") && userid.length() <= 6 && pass.length() > 8 && cRole.getValue()!=null){
+            if(ErrorController.nameChecker(fname,15,"First Name") && ErrorController.nameChecker(lname,15,"Last Name") && ErrorController.strChecker(userid,6,"User Id") && ErrorController.passwordChecker(pass,pass2,"Password") && cRole.getValue()!=null){
                 check = 1;
                 System.out.println("2");
             }
@@ -166,7 +168,7 @@ public class UserProfileController implements Initializable {
                     s.execute(q);
                     // setting default for table view.. because we added a new item so it need to be shown
                     //setDefault();
-
+                    clear();
                     AlertController a = new AlertController(Alert.AlertType.INFORMATION,null,"Successfully Added");
                     setDefault();
                 } catch (SQLException e) {
@@ -177,17 +179,63 @@ public class UserProfileController implements Initializable {
             }
         });
 
+        btnUpdate.setOnAction(event -> {
+            int check = 0;
+            String fname = txtFirst.getText();
+            String lname = txtLast.getText();
+            String userid = txtUserid.getText();
+            String pass = txtPass.getText();
+            String pass2 = txtConfirm.getText();
+            System.out.println("1");
+            if(ErrorController.nameChecker(fname,15,"First Name") && ErrorController.nameChecker(lname,15,"Last Name") && ErrorController.strChecker(userid,6,"User Id") && ErrorController.passwordChecker(pass,pass2,"Password") && cRole.getValue()!=null){
+                check = 1;
+                System.out.println("2");
+            }
+            if(check == 1) {
+                System.out.println("4");
+                try {   // if the name is alphabet and status is not null then category is added to database
+                    Statement s = connection.createStatement();
+                    String q = "UPDATE distributor.user SET fname = '" + fname + "', lname ='" + lname + "', password ='" + pass + "',role = '" + cRole.getValue() + "' where id = '" + tempId + "'";
+                    s.execute(q);
+                    // setting default for table view.. because we added a new item so it need to be shown
+                    //setDefault();
+                    clear();
+                    AlertController a = new AlertController(Alert.AlertType.INFORMATION,null,"Successfully Updated");
+                    setDefault();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                //(id int NOT NULL AUTO_INCREMENT,fname varchar(255) NOT NULL,lname varchar(255) NOT NULL,userid varchar(255) NOT NULL,password varchar(255) NOT NULL,role varchar(255) NOT NULL
+                //AlertController a = new AlertController(Alert.AlertType.ERROR,"Score Error","Enter Score in Correct Format");
+            }
+
+        });
+
+
+
+        btnDelete.setOnAction(event -> {
+            String query1 = "delete from distributor.user where id = '" + tempId + "'";
+            try {
+                if (txtFirst.getLength() >= 1) {
+                    Statement s = connection.createStatement();
+                    s.execute(query1);
+
+                    setDefault();
+
+                    AlertController a = new AlertController(Alert.AlertType.INFORMATION, null, "Successfully Deleted");
+                    clear();
+                } else {
+                    AlertController a = new AlertController(Alert.AlertType.WARNING, null, "Search a user then press delete Button");
+                }
+            } catch (Exception ex) {
+                System.out.println(ex.toString());
+            }
+        });
+
+
         btnClear.setOnAction(event -> {
-            txtFirst.clear();
-            txtLast.clear();
-            txtUserid.clear();
-            txtPass.clear();
-            txtConfirm.clear();
-            cRole.setValue(null);
-            btnCreate.setVisible(true);
-            btnUpdate.setVisible(false);
-            txtUserid.setEditable(true);
-            cRole.setDisable(false);
+            clear();
         });
 
         btnBack.setOnAction(event -> {
@@ -229,8 +277,20 @@ public class UserProfileController implements Initializable {
             }
 
         });
-
     }
+    public  void clear(){
+        txtFirst.clear();
+        txtLast.clear();
+        txtUserid.clear();
+        txtPass.clear();
+        txtConfirm.clear();
+        cRole.setValue(null);
+        btnCreate.setVisible(true);
+        btnUpdate.setVisible(false);
+        txtUserid.setEditable(true);
+        cRole.setDisable(false);
+    }
+
     public void setDefault() {
 
         ObservableList<UserProfile> n = FXCollections.observableArrayList();
@@ -259,4 +319,3 @@ public class UserProfileController implements Initializable {
 
     }
 }
-

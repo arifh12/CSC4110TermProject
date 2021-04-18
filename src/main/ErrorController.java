@@ -88,6 +88,63 @@ public class ErrorController {
         }
     }
 
+    public static boolean passwordChecker(String name,String name2,String message){
+        String checkname=name;
+        int counter=0;
+        char checkchar=0;
+
+        if(name.equals("")){
+            AlertController a = new AlertController(Alert.AlertType.ERROR,"Empty Error",message+" cannot be empty");
+            return false;
+        }
+
+        int a =0 , b = 0, c = 0, d = 0;
+
+        for(int i=0;i<checkname.length();i++)
+        {
+            checkchar= checkname.charAt(i);
+            if(checkchar <= 57 && checkchar >= 48){
+                a++;
+            }
+            if(checkchar >= 97 && checkchar <= 122){
+                b++;
+            }
+            if(checkchar >= 65 && checkchar <= 90){
+                c++;
+            }
+
+            if((checkchar<=64 && checkchar>=58)||(checkchar<=96 && checkchar>=91)||(checkchar<=126 && checkchar>=123) ||(checkchar<=47 && checkchar>=32) )
+            {
+                d++;
+            }
+
+        }
+        if((a >= 1) && (b >= 1) && (c >= 1) && (d >= 1)){
+            counter = a + b + c + d;
+        }else{
+            AlertController aa = new AlertController(Alert.AlertType.ERROR,"Character Error",message+" must contain special charater and alphanumeric character");
+            return false;
+        }
+        if(checkname.length() < 17 && checkname.length() > 7){
+            if(counter==checkname.length()){
+                if(name.equals(name2)){
+                    return true;
+                }
+                else{
+                    AlertController aa = new AlertController(Alert.AlertType.ERROR,"Match Error",message+" does not match");
+                    return false;
+                }
+            }
+            else{
+                AlertController aa = new AlertController(Alert.AlertType.ERROR,"Character Error",message+" must contain special charater and alphanumeric character");
+                return false;
+            }
+        }else{
+            AlertController aa = new AlertController(Alert.AlertType.ERROR,"Length Error",message+" Length Must be 8 to 16 alphanumeric and special character");
+            return false;
+        }
+    }
+
     public static boolean phnChecker(String name){
         String checkname=name;
         int counter=0;
