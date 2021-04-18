@@ -19,7 +19,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+/*
+this class is used to control customer invoice
+this class get data from database and create its invoice by using panes and labels
 
+ */
 public class CustomerInvoiceController implements Initializable {
 
 

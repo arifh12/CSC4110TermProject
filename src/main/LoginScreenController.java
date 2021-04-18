@@ -15,7 +15,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
-
+/*
+this class is used to login and verify the credentials from database
+ */
 public class LoginScreenController implements Initializable {
 
 

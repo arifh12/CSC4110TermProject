@@ -19,7 +19,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
+/*
+this class is used to control customer orders whenever the user select customer it get its data from db..
+and when the order is created. everything will be stored in database to create its invoice
+ */
 public class CustomerOrderController implements Initializable {
 
 

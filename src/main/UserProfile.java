@@ -1,7 +1,9 @@
 package main;
 
 import javafx.beans.property.SimpleStringProperty;
-
+/*
+this class only used string property and is used to fill the data in the tables and to implement the model
+ */
 public class UserProfile {
     SimpleStringProperty id, fname, lname, userid, password, role;
 

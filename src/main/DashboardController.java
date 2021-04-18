@@ -26,7 +26,9 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-
+/*
+this class display the buttons for the dashboard screen and also check that which user use which features. and show him features accordingly
+ */
 public class DashboardController implements Initializable {
 
 

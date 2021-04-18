@@ -19,7 +19,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-
+/*
+this class is used to create user profiles delete user profiles edit user profiles.
+ and to view them in a table form. also this class is used to search for the user profile
+ */
 public class UserProfileController implements Initializable {
 
     @FXML

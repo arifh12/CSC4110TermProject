@@ -1,11 +1,9 @@
 package main;
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+this class uses certain methods to check specific formats. for example if the number is a digit or not?
+a string is actually a string or not?
+and many other things
  */
-
-
 import javafx.scene.control.Alert;
 
 import java.text.ParseException;

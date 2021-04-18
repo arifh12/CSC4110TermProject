@@ -18,7 +18,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-
+/*
+this class is used to create vendor profiles delete vendor profiles edit vendor profiles.
+ and to view them in a table form. also this class is used to search for the vendor profile
+ */
 public class VendorCustomerController implements Initializable {
 
 

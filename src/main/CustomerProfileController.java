@@ -18,7 +18,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-
+/*
+this class is used to create customers profiles delete customer profiles edit customer profiles.
+ and to view them in a table form. also this class is used to search for the customer profile
+ */
 public class CustomerProfileController implements Initializable {
 
 

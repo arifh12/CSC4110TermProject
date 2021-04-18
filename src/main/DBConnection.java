@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-
+/*
+this class create database and tables and make connection with database through objects
+ */
 public class DBConnection {
 
     public Connection getConnection() {
