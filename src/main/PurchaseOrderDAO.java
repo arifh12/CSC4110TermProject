@@ -134,4 +134,23 @@ public class PurchaseOrderDAO {
 
         return orderList;
     }
+
+    /**
+     * This method checks the database whether or not more than 2 items are out of stock and returns the appropriate
+     * boolean value.
+     *
+     * @param count number of items allowed to have 0 quantity
+     * @return <code>true</code> if >2 items are out of stock; otherwise, <code>false</code>
+     * @throws SQLException
+     */
+    public boolean getStockInfo(int count) throws SQLException {
+        String sql = "SELECT count(*) from distributor.item WHERE quantity <= 0;";
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+
+        if (rs.next())
+            return rs.getInt(1) > count;
+
+        return false;
+    }
 }

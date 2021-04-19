@@ -71,60 +71,68 @@ public class DashboardController implements Initializable {
         con = new DBConnection();
         connection = con.getConnection();
 
-        if(LoginScreenController.role.equals("Owner")){
-            btnUser.setVisible(true);
-            btnItem.setVisible(true);
-            btnCustomer.setVisible(true);
-            btnCustomerOrder.setVisible(true);
-            btnCustomerProfile.setVisible(true);
-            btnPurchaseOrder.setVisible(true);
-            btnVendor.setVisible(true);
-        } else if(LoginScreenController.role.equals("System Administrator")){
-            btnUser.setVisible(true);
-            btnItem.setVisible(true);
-            btnCustomer.setVisible(true);
-            btnCustomerOrder.setVisible(true);
-            btnCustomerProfile.setVisible(true);
-            btnPurchaseOrder.setVisible(true);
-            btnVendor.setVisible(true);
-        } else if(LoginScreenController.role.equals("Sales Person")){
-            btnUser.setVisible(false);
-            btnItem.setVisible(false);
-            btnCustomer.setVisible(false);
-            btnCustomerOrder.setVisible(true);
-            btnCustomerProfile.setVisible(false);
-            btnPurchaseOrder.setVisible(false);
-            btnVendor.setVisible(false);
-            alertExpired();
-        } else if(LoginScreenController.role.equals("Accountant")){
-            btnUser.setVisible(false);
-            btnItem.setVisible(false);
-            btnCustomer.setVisible(true);
-            btnCustomerOrder.setVisible(false);
-            btnCustomerProfile.setVisible(false);
-            btnPurchaseOrder.setVisible(false);
-            btnVendor.setVisible(false);
-            alertAccountant();
-        } else if(LoginScreenController.role.equals("Purchaser")){
-            btnUser.setVisible(false);
-            btnItem.setVisible(true);
-            btnCustomer.setVisible(false);
-            btnCustomerOrder.setVisible(false);
-            btnCustomerProfile.setVisible(false);
-            btnPurchaseOrder.setVisible(true);
-            btnVendor.setVisible(true);
-            alertOutOfStock();
-        } else if(LoginScreenController.role.equals("Inventory Manager")){
-            btnUser.setVisible(false);
-            btnItem.setVisible(true);
-            btnCustomer.setVisible(false);
-            btnCustomerOrder.setVisible(false);
-            btnCustomerProfile.setVisible(false);
-            btnPurchaseOrder.setVisible(false);
-            btnVendor.setVisible(false);
+
+        switch (Session.USER.getRole()) {
+            case OWNER:
+                btnUser.setVisible(true);
+                btnItem.setVisible(true);
+                btnCustomer.setVisible(true);
+                btnCustomerOrder.setVisible(true);
+                btnCustomerProfile.setVisible(true);
+                btnPurchaseOrder.setVisible(true);
+                btnVendor.setVisible(true);
+                break;
+            case ADMINISTRATOR:
+                btnUser.setVisible(true);
+                btnItem.setVisible(true);
+                btnCustomer.setVisible(true);
+                btnCustomerOrder.setVisible(true);
+                btnCustomerProfile.setVisible(true);
+                btnPurchaseOrder.setVisible(true);
+                btnVendor.setVisible(true);
+                break;
+            case SALES_PERSON:
+                btnUser.setVisible(false);
+                btnItem.setVisible(false);
+                btnCustomer.setVisible(false);
+                btnCustomerOrder.setVisible(true);
+                btnCustomerProfile.setVisible(false);
+                btnPurchaseOrder.setVisible(false);
+                btnVendor.setVisible(false);
+                alertExpired();
+                break;
+            case ACCOUNTANT:
+                btnUser.setVisible(false);
+                btnItem.setVisible(false);
+                btnCustomer.setVisible(true);
+                btnCustomerOrder.setVisible(false);
+                btnCustomerProfile.setVisible(false);
+                btnPurchaseOrder.setVisible(false);
+                btnVendor.setVisible(false);
+                alertAccountant();
+                break;
+            case PURCHASER:
+                btnUser.setVisible(false);
+                btnItem.setVisible(true);
+                btnCustomer.setVisible(false);
+                btnCustomerOrder.setVisible(false);
+                btnCustomerProfile.setVisible(false);
+                btnPurchaseOrder.setVisible(true);
+                btnVendor.setVisible(true);
+                alertOutOfStock();
+                break;
+            case INVENTORY_MANAGER:
+                btnUser.setVisible(false);
+                btnItem.setVisible(true);
+                btnCustomer.setVisible(false);
+                btnCustomerOrder.setVisible(false);
+                btnCustomerProfile.setVisible(false);
+                btnPurchaseOrder.setVisible(false);
+                btnVendor.setVisible(false);
+                break;
+            default:
+                break;
         }
-
-
 
         btnUser.setOnAction(event ->{
             try {

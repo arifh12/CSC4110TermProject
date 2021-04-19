@@ -78,6 +78,7 @@ public class PurchaseOrderController implements Initializable {
 
     private final int MIN_ITEMS = 1;
     private final int MAX_ITEMS = 5;
+    private final int OOS_COUNT = 2; //number of out of stock items to trigger the alert
     private final PurchaseOrderDAO purchaseDAO = new PurchaseOrderDAO();
     private String vendorName;
     private List<Item> vendorItems;
@@ -97,6 +98,7 @@ public class PurchaseOrderController implements Initializable {
 
         // Retrieves a list of existing purchase ID's
         try {
+            checkStock();
             purchaseIdList = purchaseDAO.getPurchaseIds("");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -210,6 +212,18 @@ public class PurchaseOrderController implements Initializable {
     }
 
     /**
+     * Displays an alert when more than 2 items are out of stock
+     *
+     * @throws SQLException
+     */
+    private void checkStock() throws SQLException {
+        if(purchaseDAO.getStockInfo(OOS_COUNT)) {
+            AlertController a = new AlertController(Alert.AlertType.WARNING, "Stock Warning",
+                    "More than " + OOS_COUNT + " items are out of stock!");
+        }
+    }
+
+    /**
      * This method is used for the initialization of the table that displays the full purchase order.
      */
     public void initializeTable() {
@@ -276,6 +290,10 @@ public class PurchaseOrderController implements Initializable {
 
         total += Double.parseDouble(order.getSubtotal());
         tfTotal.setText(String.format("$%.2f", total));
+
+        cbItem.setValue("");
+        dateNeedBy.setValue(null);
+        tfQuantity.setText("");
     }
 
     /**

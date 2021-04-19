@@ -52,6 +52,7 @@ public class LoginScreenController implements Initializable {
 
             if(userName.equals("admin")&& password.equals("admin")){
                 role = "Owner";
+                Session.USER.setRole(Roles.OWNER);
                 try {
                     Stage stage = new Stage();  // go to dashboard if information is correct
                     FXMLLoader loader = new FXMLLoader();
@@ -78,6 +79,29 @@ public class LoginScreenController implements Initializable {
                     if (rs.next()) {    // selecting password from status and role from database
                         if (rs.getString(1).equals(password)) {
                             role = rs.getString(2);
+                            switch (role) {
+                                case "Owner":
+                                    Session.USER.setRole(Roles.OWNER);
+                                    break;
+                                case "System Administrator":
+                                    Session.USER.setRole(Roles.ADMINISTRATOR);
+                                    break;
+                                case "Sales Person":
+                                    Session.USER.setRole(Roles.SALES_PERSON);
+                                    break;
+                                case "Accountant":
+                                    Session.USER.setRole(Roles.ACCOUNTANT);
+                                    break;
+                                case "Purchaser":
+                                    Session.USER.setRole(Roles.PURCHASER);
+                                    break;
+                                case "Inventory Manager":
+                                    Session.USER.setRole(Roles.INVENTORY_MANAGER);
+                                    break;
+                                default:
+                                    Session.USER.setRole(null);
+                                    break;
+                            }
                             try {
                                 Stage stage = new Stage();  // go to dashboard if information is correct
                                 FXMLLoader loader = new FXMLLoader();
