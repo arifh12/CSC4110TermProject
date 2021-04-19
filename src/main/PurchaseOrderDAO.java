@@ -81,6 +81,7 @@ public class PurchaseOrderDAO {
         double total = orderList.stream().mapToDouble(order -> Double.parseDouble(order.getSubtotal())).sum();
         String sql2 = "UPDATE distributor.vendor SET balance = balance + " + total + " WHERE fname = '" + vendor + "';";
         Statement st = conn.createStatement();
+        st.execute(sql2);
 
         return ps.executeBatch().length > 0;
     }
