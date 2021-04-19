@@ -169,4 +169,25 @@ public class ItemDAO {
 
         return ps.executeUpdate() > 0;
     }
+
+    /**
+     * This method is used for deleting an item that does not have associated purchase order or customer invoice. It
+     * returns the appropriate boolean value.
+     *
+     * @param id
+     * @return <code>true</code> if item was deleted successfully; otherwise, <code>false</code>.
+     * @throws SQLException
+     */
+    public boolean delete(int id) throws SQLException {
+        String sql = "DELETE " +
+                "FROM distributor.item " +
+                "WHERE id=? AND id NOT IN (" +
+                "SELECT distinct purchaseOrder.itemId " +
+                "FROM distributor.purchaseOrder" +
+                ");";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, id);
+
+        return ps.executeUpdate() > 0;
+    }
 }

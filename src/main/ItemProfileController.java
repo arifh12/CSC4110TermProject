@@ -66,6 +66,8 @@ public class ItemProfileController implements Initializable {
     @FXML
     private Button btnUpdate;
     @FXML
+    private Button btnDelete;
+    @FXML
     private TableColumn<Item, Integer> colId;
     @FXML
     private TableColumn<Item, String> colName;
@@ -159,6 +161,7 @@ public class ItemProfileController implements Initializable {
         btnClear.setOnAction(e -> {
             btnCreate.setDisable(false);
             btnUpdate.setDisable(true);
+            btnDelete.setDisable(true);
             clearInputs();
         });
 
@@ -202,9 +205,11 @@ public class ItemProfileController implements Initializable {
     public void initializeScene(Roles role) {
         btnUpdate.setDisable(true);
         tblItems.setVisible(false);
+        btnDelete.setDisable(true);
         if (!(role.equals(Roles.PURCHASER) || role.equals(Roles.OWNER) || role.equals(Roles.INVENTORY_MANAGER))) {
             btnCreate.setDisable(true);
             btnClear.setDisable(true);
+            btnDelete.setDisable(true);
         }
         if (!(role.equals(Roles.OWNER) || role.equals(Roles.PURCHASER))) {
             tfSearch.setVisible(false);
@@ -281,7 +286,8 @@ public class ItemProfileController implements Initializable {
 
     /**
      * This method uses the provided searched Item object and displays all the associated information onto the screen.
-     * Users have the option to update the item's information.
+     * Users have the option to update the item's information, or delete an item that is not in any purchase order or
+     * customer invoice.
      *
      * @param searchResult
      */
@@ -297,6 +303,7 @@ public class ItemProfileController implements Initializable {
 
         // Enable update when searched item is found.
         btnUpdate.setDisable(false);
+        btnDelete.setDisable(false);
         btnCreate.setDisable(true);
         btnUpdate.setOnAction(e -> {
             try {
@@ -311,6 +318,23 @@ public class ItemProfileController implements Initializable {
                             "Success", "Item has been updated successfully!");
                     btnClear.fire();
                     displayTable();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        });
+        // Option to delete an item if it isn't in any purchase order/customer invoice
+        btnDelete.setOnAction(e -> {
+            try {
+                if (itemDAO.delete(searchResult.getId())) {
+                    AlertController a = new AlertController(Alert.AlertType.INFORMATION, "Item deleted",
+                            "Item has been successfully deleted!");
+                    btnClear.fire();
+                    displayTable();
+                } else {
+                    AlertController a = new AlertController(Alert.AlertType.ERROR, "Deletion failed",
+                            "Item could not be deleted because it appears in an existing purchase order or" +
+                                    " invoice!");
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());

@@ -359,7 +359,7 @@ public class CustomerOrderController implements Initializable {
 
 
         try {       // updating the brand table
-            String query1 = "Select quantityonhand from distributor.item where name = '" + item + "'";
+            String query1 = "Select quantity from distributor.item where name = '" + item + "'";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query1);
             rs.next();
@@ -380,13 +380,13 @@ public class CustomerOrderController implements Initializable {
 
 
         try {       // updating the brand table
-            String query1 = "Select quantityonhand from distributor.item where name = '" + item + "'";
+            String query1 = "Select quantity from distributor.item where name = '" + item + "'";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query1);
             rs.next();
             int quantity = Integer.parseInt(rs.getString(1))-Integer.parseInt(txt.getText());
             if(quantity >= 0){
-                query1 = "update distributor.item set quantityonhand = '" + quantity + "' where name = '" + item + "'";
+                query1 = "update distributor.item set quantity = '" + quantity + "' where name = '" + item + "'";
                 s = connection.createStatement();
                 s.execute(query1);
             }else{

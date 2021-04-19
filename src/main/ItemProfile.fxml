@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ItemProfileController">
+<VBox stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ItemProfileController">
    <children>
       <HBox alignment="CENTER" spacing="300.0" style="-fx-background-color: #2D75E8;">
          <children>
@@ -59,6 +71,7 @@
                   <Button fx:id="btnSearch" mnemonicParsing="false" text="Search" textFill="WHITE" GridPane.columnIndex="1" />
                   <Button fx:id="btnClear" mnemonicParsing="false" text="Clear" textFill="WHITE" GridPane.rowIndex="9" />
                   <Button fx:id="btnUpdate" mnemonicParsing="false" text="Update" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <Button fx:id="btnDelete" mnemonicParsing="false" text="Delete" textFill="WHITE" GridPane.rowIndex="10" />
                </children>
             </GridPane>
             <TableView fx:id="tblItems" prefHeight="683.0" prefWidth="801.0">
